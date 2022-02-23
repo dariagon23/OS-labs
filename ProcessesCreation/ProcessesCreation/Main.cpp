@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 #include <conio.h>
 #include<iostream>
@@ -11,6 +12,7 @@ double hours; // количество отработанных часов
 };
 int main()
 {
+    setlocale(LC_ALL, "Russian");
 	char binFileName[20];
 	std::cout << "Input bin file name >" << std::endl;
 	std::cin >> binFileName;
@@ -48,30 +50,43 @@ int main()
 		
 	}
 	in.close();
-	//std::cout << "Input the name of report file > " << std::endl;
-	//char reportName[20];
-	//std::cin >> reportName;
-	//std::cout << "Input the pay per hour > " << std::endl;
-	//int pay;
-	//std::cin >> pay;
-	//char lpszCommandLine2[40] = "Reporter.exe ";
-	//strcat(lpszCommandLine2, reportName);
-	//char buff2[10];
-	//strcat(lpszCommandLine2, " ");
-	//strcat(lpszCommandLine2 ,itoa(pay, buff2, 10));
 
-	//STARTUPINFO si2;
-	//PROCESS_INFORMATION piCom2;
-	//ZeroMemory(&si2, sizeof(STARTUPINFO));
-	//si2.cb = sizeof(STARTUPINFO);
-	//// создаем новый консольный процесс
- //   CreateProcess(NULL, lpszCommandLine2, NULL, NULL, FALSE,
-	//CREATE_NEW_CONSOLE, NULL, NULL, &si2, &piCom2);
-	////ожидание окончание процесса
-	//WaitForSingleObject(piCom2.hProcess, INFINITE);
-	//// закрываем дескрипторы этого процесса
-	//CloseHandle(piCom2.hThread);
-	//CloseHandle(piCom2.hProcess);
+	std::cout << "Input the name of report file > " << std::endl;
+	char reportName[20];
+	std::cin >> reportName;
+	std::cout << "Input the pay per hour > " << std::endl;
+	int pay;
+	std::cin >> pay;
+	char lpszCommandLine2[40] = "Reporter.exe ";
+	strcat(lpszCommandLine2, binFileName);
+	strcat(lpszCommandLine2, " ");
+	strcat(lpszCommandLine2, reportName);
+	char buff2[10];
+	strcat(lpszCommandLine2, " ");
+	strcat(lpszCommandLine2 ,itoa(pay, buff2, 10));
+
+	STARTUPINFO si2;
+	PROCESS_INFORMATION piCom2;
+	ZeroMemory(&si2, sizeof(STARTUPINFO));
+	si2.cb = sizeof(STARTUPINFO);
+	// создаем новый консольный процесс
+    CreateProcess(NULL, lpszCommandLine2, NULL, NULL, FALSE,
+	CREATE_NEW_CONSOLE, NULL, NULL, &si2, &piCom2);
+	//ожидание окончание процесса
+	WaitForSingleObject(piCom2.hProcess, INFINITE);
+	// закрываем дескрипторы этого процесса
+	CloseHandle(piCom2.hThread);
+	CloseHandle(piCom2.hProcess);
+	//
+	ifstream finn(reportName);
+	while (!finn.eof())
+	{
+		char* str = new char[100];
+		finn.getline(str, 100);
+		cout << str << endl;
+		delete[]str;
+	}
+	finn.close();
 	_getch(); 
 	return 0;
 }
