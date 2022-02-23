@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProcessesCreation", "Proces
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Creator", "Creator\Creator.vcproj", "{3D7470CF-620A-4FD3-A0E8-B7587F357CC0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reporter", "Reporter\Reporter.vcproj", "{E8071F7F-9298-498D-9916-157D89909356}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{3D7470CF-620A-4FD3-A0E8-B7587F357CC0}.Debug|Win32.Build.0 = Debug|Win32
 		{3D7470CF-620A-4FD3-A0E8-B7587F357CC0}.Release|Win32.ActiveCfg = Release|Win32
 		{3D7470CF-620A-4FD3-A0E8-B7587F357CC0}.Release|Win32.Build.0 = Release|Win32
+		{E8071F7F-9298-498D-9916-157D89909356}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E8071F7F-9298-498D-9916-157D89909356}.Debug|Win32.Build.0 = Debug|Win32
+		{E8071F7F-9298-498D-9916-157D89909356}.Release|Win32.ActiveCfg = Release|Win32
+		{E8071F7F-9298-498D-9916-157D89909356}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
