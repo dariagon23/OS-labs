@@ -1,26 +1,36 @@
 #include<windows.h>
 #include<iostream>
-DWORD WINAPI Note(LPVOID num)
+volatile int avrg,n;
+DWORD WINAPI average(LPVOID num)
 {
-	std::cout << "Thread is created" << std::endl;
-	//(int)num++;
-	std::cout << (int)num << std::endl;
+	avrg =0;
+	for(int i=0; i<n;  i++)
+	{
+		avrg+=((int*)num)[i];
+	}
+	avrg/=n;
 	return 0;
 } 
 int main()
 {
-	int n = 100;
+	int temp;
+	std::cin >> temp;
+	n = temp;
+	int*arr = new int[n];
+	for(int i=0; i<n; i++)
+	{
+		std::cin >> arr[i];
+	}
 	HANDLE hMain;
 	DWORD IDMain;
 	// Main thread creation
-	 hMain = CreateThread(NULL, 0, Note, (void*)n, 0, &IDMain);
+	hMain = CreateThread(NULL, 0, average, (void*)arr, 0, &IDMain);
 	if (hMain == NULL)
 		return GetLastError();
-	// waiting for Note 
+	// waiting for average 
 	WaitForSingleObject(hMain, INFINITE);
-	// close Note
+	// close average
 	CloseHandle(hMain);
-	std::cout << n << std::endl;
-	std::cout << "The End!"<< std::endl; 
+	std::cout << "Average value = " <<avrg << std::endl; 
 	return 0;
 }
