@@ -1,36 +1,70 @@
 #include<windows.h>
 #include<iostream>
-volatile int avrg,n;
+int n;
 DWORD WINAPI average(LPVOID num)
 {
-	avrg =0;
+	int avrg = 0;
 	for(int i=0; i<n;  i++)
 	{
 		avrg+=((int*)num)[i];
+		Sleep(12);
 	}
 	avrg/=n;
+	std::cout << "Average value = " <<avrg << std::endl; 
+	return 0;
+} 
+DWORD WINAPI min_max(LPVOID num)
+{
+	int ind_min = 0, ind_max = 0;
+	for(int i=1; i<n;  i++)
+	{
+		if(((int*)num)[i]<((int*)num)[ind_min])
+		{
+			ind_min = i;
+			Sleep(7);
+		}
+		else
+		{
+			if(((int*)num)[i]>((int*)num)[ind_max])
+			{
+				ind_max = i;
+				Sleep(7);
+			}
+		}
+	}
+	std::cout << "Max value = " <<((int*)num)[ind_max] << std::endl;
+	std::cout << "Min value = " <<((int*)num)[ind_min] << std::endl;
 	return 0;
 } 
 int main()
 {
-	int temp;
-	std::cin >> temp;
-	n = temp;
+	std::cin >> n;
 	int*arr = new int[n];
 	for(int i=0; i<n; i++)
 	{
 		std::cin >> arr[i];
 	}
-	HANDLE hMain;
-	DWORD IDMain;
-	// Main thread creation
-	hMain = CreateThread(NULL, 0, average, (void*)arr, 0, &IDMain);
-	if (hMain == NULL)
+	HANDLE hAverage;
+	DWORD IDAverage;
+	// Average thread creation
+	hAverage = CreateThread(NULL, 0, average, (void*)arr, 0, &IDAverage);
+	if (hAverage == NULL)
 		return GetLastError();
 	// waiting for average 
-	WaitForSingleObject(hMain, INFINITE);
+	WaitForSingleObject(hAverage, INFINITE);
 	// close average
-	CloseHandle(hMain);
-	std::cout << "Average value = " <<avrg << std::endl; 
+	CloseHandle(hAverage);
+
+	HANDLE hMinMax;
+	DWORD IDMinMax;
+	// MinMax thread creation
+	hMinMax = CreateThread(NULL, 0, min_max, (void*)arr, 0, &IDMinMax);
+	if (hMinMax == NULL)
+		return GetLastError();
+	// waiting for min_max 
+	WaitForSingleObject(hMinMax, INFINITE);
+	// close min_max
+	CloseHandle(hMinMax);
+	system("pause");
 	return 0;
 }
