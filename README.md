@@ -1,2 +1,4 @@
 # OS-labs
-The first lab: Creation of the processes
+Lab 1: Creation of processes
+Lab 2: Creation of threads
+Lab 3: Synchronisation of threads, critical sections
