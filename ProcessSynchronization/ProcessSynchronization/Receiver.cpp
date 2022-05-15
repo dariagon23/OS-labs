@@ -18,5 +18,36 @@ int main()
 		return 0;
 	}
 	file.close();
+	int numberOfSenders;
+	std::cout << "Input the number of Senders:" << std::endl;
+	std::cin >> numberOfSenders;
+	char commandLine[100];
+	sprintf(commandLine, "%s %s %d", "Sender.exe", binFileName, count);
+	// ready to work signal
+	HANDLE hWorkEvent;
+	CHAR EventName[] = "ReadyToWork";
+	hWorkEvent = CreateEvent(NULL, FALSE, FALSE, EventName);
+	// creation of mutex
+	HANDLE	hMutex;
+	hMutex = CreateMutex(NULL, FALSE, "Sender");
+	
+	STARTUPINFO *si = new STARTUPINFO[numberOfSenders];
+	PROCESS_INFORMATION *piCom = new PROCESS_INFORMATION[numberOfSenders];
+	// run numberOfSenders process
+	for (int i = 0; i < numberOfSenders; i++)
+	{
+		ZeroMemory(&si[i], sizeof(STARTUPINFO));
+		si[i].cb = sizeof(STARTUPINFO);
+		// creation of console process
+		CreateProcess(NULL, (LPTSTR)commandLine, NULL, NULL, FALSE,
+			CREATE_NEW_CONSOLE, NULL, NULL, &si[i], &piCom[i]);
+	}
+	// waiting for ready to work signal
+	for (int i = 0; i < numberOfSenders; i++)
+	{
+		WaitForSingleObject(hWorkEvent, INFINITE);
+	}
+	CloseHandle(hWorkEvent);
+
 	return 0;
 }
