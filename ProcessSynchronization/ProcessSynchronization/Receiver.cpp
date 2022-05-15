@@ -50,6 +50,7 @@ int main()
 	CloseHandle(hWorkEvent);
 	int temp;
 	bool b =true;
+	int sizeOfFile;
 	while(b)
 	{
 		std::cout << "To read message from binary file input 1" << std::endl;
