@@ -57,7 +57,7 @@ int main()
 		std::cin >> temp;
 		if (temp != 1 && temp != 2) 
 		{
-			cout << "Wrong command number! Try again!";
+			std::cout << "Wrong command number! Try again!" << std::endl;
 			continue;
 		}
 		if (temp == 2) 
