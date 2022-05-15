@@ -48,6 +48,72 @@ int main()
 		WaitForSingleObject(hWorkEvent, INFINITE);
 	}
 	CloseHandle(hWorkEvent);
-
+	int temp;
+	bool b =true;
+	while(b)
+	{
+		std::cout << "To read message from binary file input 1" << std::endl;
+		std::cout << "To finish work input 2" << std::endl;
+		std::cin >> temp;
+		if (temp != 1 && temp != 2) 
+		{
+			cout << "Wrong command number! Try again!";
+			continue;
+		}
+		if (temp == 2) 
+		{
+			break;
+		}
+		sizeOfFile = 0;
+		std::fstream fin, fout;
+		while (sizeOfFile == 0)
+		{
+			WaitForSingleObject(hMutex, INFINITE);
+			// find the size of binary file
+			fin.open(binFileName, std::ios::binary | std::ios::in);
+			fin.seekg(0, std::ios::end);
+			sizeOfFile = fin.tellg();
+			fin.close();
+			ReleaseMutex(hMutex);
+			// if binary file is empty, receiver will sleep for some seconds
+			if (sizeOfFile == 0)
+			{
+				Sleep(1000);
+			}
+		}
+		WaitForSingleObject(hMutex, INFINITE);
+		fin.open(binFileName, std::ios::binary | std::ios::in);
+		char message[20];
+		// read message and print it
+		fin.read(message, 20 * sizeof(char));
+		std::cout << message << std::endl;
+		// delete first message from the file
+		fout.open("tmpfile", std::ios::binary | std::ios::out | std::ios::trunc);
+		while (!fin.eof())
+		{
+			fin.read(message, 20 * sizeof(char));
+			if (!fin.eof())
+			{
+				fout.write(message, 20 * sizeof(char));
+			}
+		}
+		fin.close();
+		fout.close();
+		fin.open("tmpfile", std::ios::binary | std::ios::in);
+		fout.open(binFileName, std::ios::binary | std::ios::out | std::ios::trunc);
+		while (!fin.eof())
+		{
+			fin.read(message, 20 * sizeof(char));
+			if (!fin.eof())
+			{
+				fout.write(message, 20 * sizeof(char));
+			}
+		}
+		fin.close();
+		fout.close();
+		remove("tmpfile");
+		ReleaseMutex(hMutex);
+	}
+	CloseHandle(hMutex);
 	return 0;
 }
