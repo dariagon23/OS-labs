@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataExchangeLab5", "DataExchangeLab5\DataExchangeLab5.vcproj", "{CFF4DB16-9C56-4642-BDC8-EEC974D3F029}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFF4DB16-9C56-4642-BDC8-EEC974D3F029}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CFF4DB16-9C56-4642-BDC8-EEC974D3F029}.Debug|Win32.Build.0 = Debug|Win32
+		{CFF4DB16-9C56-4642-BDC8-EEC974D3F029}.Release|Win32.ActiveCfg = Release|Win32
+		{CFF4DB16-9C56-4642-BDC8-EEC974D3F029}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
