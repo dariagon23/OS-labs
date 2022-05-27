@@ -40,6 +40,7 @@ void getEmployees(std::vector<employee>& employees) {
     } while (true);
     return;
 }
+
 int main()
 {
 	//creation of binary file
@@ -55,18 +56,28 @@ int main()
 	//input employees
     std::vector<employee> employees;
     getEmployees(employees);
-	std::fstream fin;
-	fin.open(binFileName, std::ios::binary | std::ios::in);
+	std::fstream finn;
+	finn.open(binFileName, std::ios::binary | std::ios::out);
 	std::cout << "Binary File:" << std::endl;
-	//write employees to bin file and output to the screen
+	//write employees to bin file
 	for(unsigned int i=0; i<employees.size(); i++)
 	{
-		fin.write((char*)&employees[i], sizeof(employee));
-		std::cout << employees[i].name << std::endl;
-		std::cout << employees[i].num << std::endl;
-		std::cout << employees[i].hours << std::endl;
+		finn.write((char*)&employees[i], sizeof(employees[i]));
 	}
-	fin.close();
+	finn.close();
+	std::fstream in(binFileName, std::ios::in);
+	struct employee emp;
+	//reading from binary file
+	for (unsigned int i=0; i<employees.size(); i++)
+	{
+		
+		in.read((char*)&emp, sizeof(employee));
+		std::cout <<"Id: "<< emp.num << std::endl;
+		std::cout <<"Name: "<< emp.name << std::endl;
+		std::cout << "Hours: " << emp.hours << std::endl;
+		
+	}
+	in.close();
 	system("pause");
     return 0;
 }
