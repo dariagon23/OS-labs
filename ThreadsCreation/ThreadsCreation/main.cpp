@@ -48,7 +48,7 @@ int main()
 	DWORD IDAverage;
 	// Average thread creation
 	hAverage = CreateThread(NULL, 0, average, (void*)arr, 0, &IDAverage);
-	if (hAverage == NULL)
+	if (NULL == hAverage)
 		return GetLastError();
 	// waiting for average 
 	WaitForSingleObject(hAverage, INFINITE);
@@ -59,7 +59,7 @@ int main()
 	DWORD IDMinMax;
 	// MinMax thread creation
 	hMinMax = CreateThread(NULL, 0, min_max, (void*)arr, 0, &IDMinMax);
-	if (hMinMax == NULL)
+	if (NULL == hMinMax)
 		return GetLastError();
 	// waiting for min_max 
 	WaitForSingleObject(hMinMax, INFINITE);

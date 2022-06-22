@@ -61,13 +61,13 @@ int main()
 			std::cout << "Wrong command number! Try again!" << std::endl;
 			continue;
 		}
-		if (temp == 2) 
+		if (2 == temp) 
 		{
 			break;
 		}
 		sizeOfFile = 0;
 		std::fstream fin, fout;
-		while (sizeOfFile == 0)
+		while (0 == sizeOfFile)
 		{
 			WaitForSingleObject(hMutex, INFINITE);
 			// find the size of binary file
@@ -77,7 +77,7 @@ int main()
 			fin.close();
 			ReleaseMutex(hMutex);
 			// if binary file is empty, receiver will sleep for some seconds
-			if (sizeOfFile == 0)
+			if (0 == sizeOfFile)
 			{
 				Sleep(1000);
 			}
