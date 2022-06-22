@@ -1,3 +1,4 @@
+#pragma once
 #include<iostream>
 struct employee {
 	int num;
